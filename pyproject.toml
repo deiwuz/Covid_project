@@ -7,3 +7,4 @@ requires-python = ">=3.14"
 dependencies = [
     "pandas>=2.3.3",
 ]
+population_csv = 'https://raw.githubusercontent.com/datasets/population/master/data/population.csv'
