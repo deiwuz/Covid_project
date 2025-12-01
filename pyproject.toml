@@ -1,7 +1,7 @@
 [project]
-name = "zero-math"
+name = "covid-project"
 version = "0.1.0"
-description = "Add your description here"
+description = "COVID-19 Data Analysis and Visualization Pipeline"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [

@@ -12,21 +12,20 @@ Process:
     5. Export merged dataset
 
 Input:
-    - zero-math-week3/data/world_population.csv: World population statistics
-    - zero-math-week3/data/countries-aggregated.csv: Daily COVID-19 cases
+    - data/world_population.csv: World population statistics
+    - data/countries-aggregated.csv: Daily COVID-19 cases
 
 Output:
-    - zero-math-week3/data/merged_covid_population.csv: Merged dataset with COVID-19 and population data
+    - data/merged_covid_population.csv: Merged dataset with COVID-19 and population data
 
-Author: Zero Math Week 3 - Day 19
 """
 
 import pandas as pd
 from pathlib import Path
 
 # Define paths to the input CSV data files
-population_path = Path('zero-math-week3/data/world_population.csv')
-covid_csv = Path('zero-math-week3/data/countries-aggregated.csv')
+population_path = Path('../data/world_population.csv')
+covid_csv = Path('../data/countries-aggregated.csv')
 
 # Load the CSV files into pandas DataFrames
 population_df = pd.read_csv(population_path)
@@ -62,4 +61,6 @@ merged_df = pd.merge(covid_df, population_df[['Country', '2022 Population']], on
 
 # Export the merged DataFrame to a CSV file for further analysis
 # index=False prevents pandas from writing row numbers to the CSV
-merged_df.to_csv('zero-math-week3/data/merged_covid_population.csv', index=False)
+output_path = Path('../data/merged_covid_population.csv')
+output_path.parent.mkdir(parents=True, exist_ok=True)
+merged_df.to_csv(output_path, index=False)

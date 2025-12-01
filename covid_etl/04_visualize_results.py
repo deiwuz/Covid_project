@@ -14,14 +14,13 @@ Input:
     - data/covid_cases_per_100k.csv: Countries ranked by infection rate
 
 Output:
-    - plots/covid_cases_per_100k_barplot.png: Bar chart visualization
+    - ../plots/covid_cases_per_100k_barplot.png: Bar chart visualization
 
 Visualization Features:
     - Horizontal bars for better country name readability
     - Viridis color palette (colorblind-friendly gradient)
     - Tight layout to prevent label cutoff
 
-Author: Zero Math Week 3 - Day 21
 """
 
 import pandas as pd
@@ -30,8 +29,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Define paths for input data and output visualization
-covid_19_path = Path('data/covid_cases_per_100k.csv')
-covid_19_barplot_path = Path('plots/covid_cases_per_100k_barplot.png')
+covid_19_path = Path('../data/covid_cases_per_100k.csv')
+covid_19_barplot_path = Path('../plots/covid_cases_per_100k_barplot.png')
 
 # Create directories if they don't exist
 # parents=True creates parent directories if needed
@@ -43,7 +42,7 @@ covid_19_path.parent.mkdir(parents=True, exist_ok=True)
 covid_19_df = pd.read_csv(covid_19_path)
 
 # Select the top 10 countries with the highest infection rates
-# Data is already sorted in descending order from Day20.py
+# Data is already sorted in descending order from 03_calculate_per_capita.py
 top_10_countries = covid_19_df.head(10)
 
 # Create a figure with specified size (width=14 inches, height=6 inches)
