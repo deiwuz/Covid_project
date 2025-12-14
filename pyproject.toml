@@ -9,4 +9,5 @@ dependencies = [
     "pandas>=2.3.3",
     "seaborn>=0.13.2",
 ]
-population_csv = 'https://raw.githubusercontent.com/datasets/population/master/data/population.csv'
+[tool.setuptools.packages]
+find = { include = ["covid_etl", "data", "plots"] }

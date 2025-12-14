@@ -108,6 +108,17 @@ def data_standarization(population_df: pd.DataFrame, covid_df: pd.DataFrame) -> 
     print("Standardizing country names across datasets...")
     print('-' * 20)
 
+    # Auto-detect and rename country columns
+    common_aliases = ['Country/Territory', 'Country Name', 'Region', 'Nation']
+    
+    for df in [population_df, covid_df]:
+        if 'Country' not in df.columns:
+            for alias in common_aliases:
+                if alias in df.columns:
+                    df.rename(columns={alias: 'Country'}, inplace=True)
+                    print(f"Automatically standardized column '{alias}' to 'Country'")
+                    break
+
     if 'Country' not in population_df.columns or 'Country' not in covid_df.columns:
         print("DataFrames must contain 'Country' column for standardization.\n\ninitializing column standardization...")
         column_standardization(population_df, covid_df)

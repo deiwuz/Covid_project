@@ -21,48 +21,44 @@ Module Design:
 import pandas as pd
 from pathlib import Path
 from typing import Tuple
+import sys
 
 working_dir = Path(__file__).parent.parent / 'data'
 
-def data_selection(user: str) -> str:
-    """
-    Allows the user to select population and COVID data CSV files from the working directory.
+def data_selection(user: str, sys_args: list = None) -> str:
 
-    Args:
-        user (str): The name of the user.
+    if sys_args:
+        population_data_dir = sys_args[0]
+        covid_data_dir = sys_args[1]
 
-    Returns:
-        Tuple[str, str]: Paths to the selected population data and COVID data CSV files.
-    """
-
-    # Generate dictionary of CSV files in the working directory
-    possible_csvs = {}
-    
-    # List all CSV files in the working directory
-    csvs_list = [ i for i in list(working_dir.iterdir()) if i.suffix == '.csv' ]
-    for i in range(len(csvs_list)):
-        csvs_list[i] = str(csvs_list[i])
-        possible_csvs.update({i:csvs_list[i]})
-    
-    
-    while True:
-        for i in possible_csvs:
-            print(f"{i}: {possible_csvs[i]}")
+    else:
+        possible_csvs = {}
         
-        try:
-            population_data = input(f"\nHi {user}, please select the population data by entering the corresponding number: ")
-            print(f"\n You have selected: {possible_csvs[int(population_data)]}")
-
-            covid_data = input(f"\nHi {user}, please select the covid data by entering the corresponding number: ")
-            print(f"\n You have selected: {possible_csvs[int(covid_data)]}")
-            # Assign selected file paths
-            population_data_dir = possible_csvs[int(population_data)]
-            covid_data_dir = possible_csvs[int(covid_data)]
+        # List all CSV files in the working directory
+        csvs_list = [ i for i in list(working_dir.iterdir()) if i.suffix == '.csv' ]
+        for i in range(len(csvs_list)):
+            csvs_list[i] = str(csvs_list[i])
+            possible_csvs.update({i:csvs_list[i]})
+        
+        
+        while True:
+            for i in possible_csvs:
+                print(f"{i}: {possible_csvs[i]}")
             
-            break
-        except (ValueError, KeyError):
-            print("\n Invalid selection. Please enter a valid number from the list.")
-            continue
+            try:
+                population_data = input(f"\nHi {user}, please select the population data by entering the corresponding number: ")
+                print(f"\n You have selected: {possible_csvs[int(population_data)]}")
+
+                covid_data = input(f"\nHi {user}, please select the covid data by entering the corresponding number: ")
+                print(f"\n You have selected: {possible_csvs[int(covid_data)]}")
+                # Assign selected file paths
+                population_data_dir = possible_csvs[int(population_data)]
+                covid_data_dir = possible_csvs[int(covid_data)]
+                
+                break
+            except (ValueError, KeyError):
+                print("\n Invalid selection. Please enter a valid number from the list.")
+                continue
 
     return population_data_dir, covid_data_dir
 
@@ -110,12 +106,10 @@ def display_data_summary(population_data: pd.DataFrame, covid_data: pd.DataFrame
     print(f"Shape: {covid_data.shape}")
     print(covid_data.head())
 
-    print("\n=== Data Info ===")
-    print(f"Countries in population data: {population_data['Country/Territory'].nunique()}")
-    print(f"Countries in COVID data: {covid_data['Country'].nunique()}")
 
 
-def explore_data(user: str = None) -> Tuple[pd.DataFrame, pd.DataFrame]:
+
+def explore_data(user: str = None, sys_args: list = None) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
     Main function to explore COVID-19 and population data.
 
@@ -136,7 +130,10 @@ def explore_data(user: str = None) -> Tuple[pd.DataFrame, pd.DataFrame]:
         FileNotFoundError: If selected data files do not exist
         ValueError: If invalid file selection is made
     """
-    population_data, covid_data = data_selection(user)
+    if sys_args:
+        population_data, covid_data = data_selection(user, sys_args)
+    else:
+        population_data, covid_data = data_selection(user)
     population_data, covid_data = load_data(population_data, covid_data)
     display_data_summary(population_data, covid_data)
 

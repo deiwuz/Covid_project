@@ -37,6 +37,7 @@ Version: 0.1.0
 """
 
 from covid_etl import explore_data, merging_datasets, calculate_per_capita, visualize_results
+import sys
 
 
 def main():
@@ -59,13 +60,20 @@ def main():
     print("Welcome to your COVID-19 ETL Pipeline!")
     print("="*60)
 
-    user = input("\nEnter your name: ")
+    if len(sys.argv) > 1:
+        user = sys.argv[1]
+    else:
+        user = input("\nEnter your name: ")
 
     # Step 1: Explore and load data
     print("\n" + "="*60)
     print("STEP 1: Data Exploration")
     print("="*60)
-    population_df, covid_df = explore_data(user)
+    
+    if len(sys.argv) > 3:
+        population_df, covid_df = explore_data(user, [sys.argv[2], sys.argv[3]])
+    else:
+        population_df, covid_df = explore_data(user)
 
     # Step 2: Merge datasets
     print("\n" + "="*60)
