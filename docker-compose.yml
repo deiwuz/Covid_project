@@ -1,0 +1,12 @@
+services:
+  covid_project:
+    build: .
+    volumes:
+      - .:/app
+      - ./data:/app/data
+      - ./plots:/app/plots
+    working_dir: /app
+    command: python main.py
+
+    stdin_open: true
+    tty: true
