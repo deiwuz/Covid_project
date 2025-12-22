@@ -113,11 +113,11 @@ def data_standarization(population_df: pd.DataFrame, covid_df: pd.DataFrame) -> 
     
     for df in [population_df, covid_df]:
         if 'Country' not in df.columns:
-            for alias in common_aliases:
-                if alias in df.columns:
-                    df.rename(columns={alias: 'Country'}, inplace=True)
-                    print(f"Automatically standardized column '{alias}' to 'Country'")
-                    break
+            # Use next() with generator to find first matching alias (eliminates nested loop)
+            matching_alias = next((alias for alias in common_aliases if alias in df.columns), None)
+            if matching_alias:
+                df.rename(columns={matching_alias: 'Country'}, inplace=True)
+                print(f"Automatically standardized column '{matching_alias}' to 'Country'")
 
     if 'Country' not in population_df.columns or 'Country' not in covid_df.columns:
         print("DataFrames must contain 'Country' column for standardization.\n\ninitializing column standardization...")

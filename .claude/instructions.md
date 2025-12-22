@@ -1,1 +1,0 @@
-Follow the python package management guidelines in CLAUDE.md at the project root

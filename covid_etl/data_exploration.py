@@ -32,13 +32,9 @@ def data_selection(user: str, sys_args: list = None) -> str:
         covid_data_dir = sys_args[1]
 
     else:
-        possible_csvs = {}
-        
-        # List all CSV files in the working directory
-        csvs_list = [ i for i in list(working_dir.iterdir()) if i.suffix == '.csv' ]
-        for i in range(len(csvs_list)):
-            csvs_list[i] = str(csvs_list[i])
-            possible_csvs.update({i:csvs_list[i]})
+        # List all CSV files in the working directory and create indexed dictionary
+        csvs_list = [str(path) for path in working_dir.iterdir() if path.suffix == '.csv']
+        possible_csvs = {i: csv_path for i, csv_path in enumerate(csvs_list)}
         
         
         while True:
