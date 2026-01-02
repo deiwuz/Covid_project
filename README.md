@@ -108,11 +108,49 @@ Covid_project/
 │   └── merged_covid_population.csv # Intermediate merged data
 ├── plots/                  # Generated visualizations
 │   └── covid_cases_per_100k_barplot.png
+├── sql-snippets/           # SQL and Cloud Integration scripts
+│   ├── country_summary.sh  # Script to fetch country summary from BigQuery
+│   ├── csv_to_postgres.py  # Load CSV data into local Postgres
+│   ├── monthly_summary.sh  # Script to fetch monthly summary from BigQuery
+│   ├── verify_data.py      # Utility to verify downloaded CSVs
+│   └── *.sql               # SQL analysis queries
 ├── Dockerfile              # Docker image configuration
 ├── docker-compose.yml      # Docker Compose configuration
 ├── main.py                 # Application entry point
 ├── pyproject.toml          # Project metadata and dependencies
 └── README.md               # Project documentation
+```
+
+## SQL Analysis & Cloud Integration
+
+This project also supports a hybrid cloud-local workflow for analyzing larger datasets.
+
+### Workflow:
+1.  **BigQuery Extraction**: Use the provided shell scripts in `sql-snippets/` to extract summarized data from BigQuery public datasets to CSV.
+    - `country_summary.sh`: Extracts total deaths by country.
+    - `monthly_summary.sh`: Extracts monthly statistics.
+2.  **Local Loading**: Use `csv_to_postgres.py` to load the extracted CSVs into a local PostgreSQL database.
+3.  **Analysis**: Run SQL queries (e.g., `local_postgres.sql`) to derive insights.
+
+### Sample Output (Postgres)
+
+Executing the country summary analysis yields the following top countries by total deaths:
+
+```text
+postgres=# SELECT * FROM country_summary;
+         country          | total_deaths 
+--------------------------+--------------
+ United States of America |       988028
+ Brazil                   |       685203
+ India                    |       528250
+ Russia                   |       385727
+ Mexico                   |       328010
+ Peru                     |       216418
+ United Kingdom           |       189030
+ Italy                    |       176464
+ Colombia                 |       165238
+ Indonesia                |       157849
+(10 rows)
 ```
 
 ## Outputs
