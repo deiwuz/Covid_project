@@ -7,5 +7,6 @@
         "other": "off"
     },
     "editor.parameterHints.enabled": false,
-    "editor.hover.enabled": false
+    "editor.hover.enabled": "off",
+    "python.analysis.autoImportCompletions": true
 }

@@ -9,5 +9,8 @@ wheels/
 # Virtual environments
 .venv
 
-# IDE and editor files
-.claude/
+# Visual Studio Code
+.vscode
+
+# Local development scripts (machine-specific)
+*_local.sh

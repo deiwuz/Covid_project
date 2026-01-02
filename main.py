@@ -105,3 +105,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    print("Bye")
+# Step 3: Calculate per capita cases
+            
